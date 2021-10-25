@@ -5,6 +5,7 @@
 \usepackage{booktabs}
 \usepackage[scale=2]{ccicons}
 \usepackage{minted}
+\usepackage{qrcode}
 
 \usemintedstyle{trac}
 
@@ -23,6 +24,86 @@
 \end{frame}
 
 \section{Go Rootless}
+
+\subsection{Use non-root user in the container}
+
+\begin{frame}[fragile]
+  \frametitle{Use non-root user in the container}
+  
+  \begin{itemize}
+      \item  On Sysdig, 58\% of images are running as root
+  \end{itemize}
+  
+  \begin{figure}
+      \centering
+      \qrcode[height=1in]{https://sysdig.com/blog/sysdig-2021-container-security-usage-report/}
+      \caption{Sysdig 2021 container security and usage report}
+  \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Use non-root user in the container}
+  
+  \begin{minted}{dockerfile}https://www.overleaf.com/project/61769cba7764951384c4e186
+FROM ubuntu:20.04
+
+RUN mkdir /app
+RUN groupadd -r aerabi
+RUN useradd -r -s /bin/false -g aerabi aerabi
+WORKDIR /app
+COPY . /app
+RUN chown -R aerabi:aerabi /app
+
+USER aerabi
+
+CMD node index.js
+  \end{minted}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Use non-root user in the container}
+  
+  \begin{minted}{dockerfile}
+FROM node:lts-alpine
+
+RUN mkdir /app
+COPY . /app
+RUN chown -R node:node /app
+
+USER node
+
+WORKDIR /app
+
+CMD ["node", "index.js"]
+  \end{minted}
+
+  \qrcode[height=.6in]{https://github.com/aerabi/hackdockerfest/tree/master/security-examples/node-alpine-user}
+\end{frame}
+
+\subsection{Own by root, execute by non-root}
+
+\begin{frame}[fragile]
+  \frametitle{Own by root, execute by non-root}
+  
+  \begin{minted}{dockerfile}
+FROM node:lts-alpine
+
+RUN mkdir /app
+COPY . /app
+
+USER node
+
+WORKDIR /app
+
+CMD ["node", "index.js"]
+  \end{minted}
+
+  \qrcode[height=.6in]{https://github.com/aerabi/hackdockerfest/tree/master/security-examples/root-owned-nonroot-executed}
+\end{frame}
+
+\subsection{Run Docker in rootless mode}
+
+\plain{}{Run Docker in rootless mode}
 
 \section{Go Distroless}
 
