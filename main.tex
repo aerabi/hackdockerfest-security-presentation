@@ -103,15 +103,88 @@ CMD ["node", "index.js"]
 
 \subsection{Run Docker in rootless mode}
 
-\plain{}{Run Docker in rootless mode}
+\begin{frame}[fragile]
+  \frametitle{Run Docker in rootless mode}
+  
+  \begin{figure}
+      \centering
+      \qrcode[height=1in]{https://docs.docker.com/engine/security/rootless/}
+      \caption{Run the Docker daemon as a non-root user (Rootless mode)}
+  \end{figure}
+\end{frame}
 
 \section{Go Distroless}
 
+\subsection{Use the least required environment}
+
+\begin{frame}[fragile]
+  \frametitle{Use the least required environment}
+  
+  \begin{itemize}
+      \item Only install the packages required for the application to run
+      \item Preferably, start from scratch
+  \end{itemize}
+\end{frame}
+
 \section{Maintain Dependencies}
+
+\subsection{Use specific versions}
+
+\begin{frame}[fragile]
+  \frametitle{Use specific versions}
+  
+  \begin{itemize}
+      \item Use a specific version for your dependencies and base image
+      \item Update your dependency versions periodically
+  \end{itemize}
+\end{frame}
+
+\subsection{Maintain trust in content}
+
+\begin{frame}[fragile]
+  \frametitle{Use non-root user in the container}
+  
+  \begin{itemize}
+      \item Use a private registry
+      \item Sign images on Docker Hub
+  \end{itemize}
+  
+  \begin{figure}
+      \centering
+      \qrcode[height=1in]{https://docs.docker.com/engine/security/trust/}
+      \caption{Content trust in Docker}
+  \end{figure}
+\end{frame}
 
 \section{Maintain Docker Context}
 
+\begin{frame}[fragile]
+  \frametitle{Limit your build context}
+  
+  \begin{itemize}
+      \item Put your Dockerfile on a subdirectory
+      \item Use \texttt{.dockerignore}
+  \end{itemize}
+\end{frame}
+
 \section{Scan Your Images}
+
+\begin{frame}[fragile]
+  \frametitle{Scan your image}
+  
+  \begin{itemize}
+      \item Use \texttt{docker scan}
+      \item Use Docker Hub scan
+      \item Use Snyk
+      \item Use Hadolint
+  \end{itemize}
+  
+  \begin{figure}
+      \centering
+      \qrcode[height=1in]{https://www.docker.com/blog/bringing-docker-scan-to-linux/}
+      \caption{Bringing ``docker scan'' to Linux}
+  \end{figure}
+\end{frame}
 
 \plain{}{Questions?}
 
